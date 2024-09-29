@@ -36,7 +36,7 @@ const { Content, remarkPluginFrontmatter } = await entry.render();
     <section class="-z-50 sm:w-5/6 w-11/12 mx-auto pt-12">
       <img
         transition:name={entry.data.image.alt}
-        class="rounded-2xl mx-auto sm:w-4/6 w-full"
+        class="rounded-2xl mx-auto lg:w-4/6 w-full"
         src={entry.data.image.url}
         alt={entry.data.image.alt}
       />
@@ -48,7 +48,7 @@ const { Content, remarkPluginFrontmatter } = await entry.render();
       </div>
       <h1
         transition:name={entry.slug}
-        class="sm:text-6xl text-3xl text-primary font-extrabold"
+        class="lg:text-5xl text-3xl text-primary font-extrabold"
       >
         {entry.data.title}
       </h1>
