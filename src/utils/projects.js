@@ -3,37 +3,37 @@ import joke from "../assets/images/joke.webp";
 import lofi from "../assets/images/lofi.webp";
 import blog from "../assets/images/blog.webp";
 import docAid from "../assets/images/docAid.webp";
-import LifeInsureEase from "../assets/images/lifeinsureease.webp";
-import Portfolio from "../assets/images/portfolio.webp"
-import CartManagementSystem from "../assets/images/cart-management-system.webp"
+import LifeInsureEase from "../assets/images/Edu_Rohit.png";
+import Portfolio from "../assets/images/portfolio.png"
+import CartManagementSystem from "../assets/images/retrieval-system.png"
 const data = [
     {
-        name: "Cart Management System",
+        name: "Intelligent information retrieval System",
         type: "WebApp",
-        url: "https://cart-system-sveltekit.vercel.app/",
-        github: "https://github.com/DevRohit06/cart-system-sveltekit",
+        url: "https://mini-project-ugln.onrender.com/",
+        github: "https://github.com/rohitbedse/Mini-Project.git",
         image: CartManagementSystem,
-        slug: "cart-management-system",
-        description: "This is a Cart Management System made using SvelteKit and Tailwind css with the help of FakeStoreAPI. it has two versions one with sveltekit and another with NextJS.",
-        tech: ['HTML', 'Javascript', 'Css', 'Tailwind css', 'SvelteKit', 'NextJS']
+        slug: "Information-retrieval-system",
+        description: "#",
+        tech: ['Python', 'Streamlit', 'FIASS', 'Langchain', 'Miniconda', 'Render']
         
     },
     {
-        name: "LifeInsureEase",
+        name: "E-learnig Platform",
         type: "Website",
-        url: "https://lifeinsureease.in/",
-        github: "https://github.com/DevRohit06/insurance-website",
+        url: "#projects",
+        github: "https://github.com/rohitbedse/Edu_Rohit.git",
         image: LifeInsureEase,
-        slug: "lifeinsureease",
-        description: "This is an Insurance website made using Astro, Reactjs and Tailwind css. ",
-        tech: ['HTML', 'Javascript', 'Css', 'Tailwind css', 'Astro', 'Reactjs']
+        slug: "E-Leaning-Platform",
+        description: "#",
+        tech: ['Html', 'CSS', 'javascript', 'tailwaind', 'git', 'project-setup']
 
     },
     {
         name: "Portfolio Website",
         type: "Website",
-        url: "https://rohitk06.site/",
-        github: "https://github.com/DevRohit06/Portfolio-website",
+        url: "https://portfolio-demo-seven-lyart.vercel.app/",
+        github: "https://github.com/rohitbedse/Portfolio-Demo.git",
         image: Portfolio,
         slug: "portfolio",
         description: "This is my Portfolio website made using Astro, Reactjs and Tailwind css. ",
