@@ -1,47 +1,53 @@
-import Toast from "./Toast.jsx";
 import { useState } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 
 import backgroundImg from "../assets/images/background.webp";
+
 export default function Contact() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  const [isToast, setisToast] = useState(false);
-  function Check() {
-    if (!message || !email || !name) {
-      toast.error("Invalid inputs", {
-        style: { backgroundColor: "#303030", color: "#fff" },
-      });
-    }
-  }
+
   function handleForm(e) {
     e.preventDefault();
 
-    toast.success("Message Sent Successfully", {
-      style: { backgroundColor: "#303030", color: "#fff" },
-    });
+    // Validation
+    if (!name.trim() || !email.trim() || !message.trim()) {
+      toast.error("All fields are required!", {
+        style: { backgroundColor: "#303030", color: "#fff" },
+      });
+      return;
+    }
+
     axios.defaults.headers.post["Content-Type"] = "application/json";
     axios
       .post("https://formsubmit.co/ajax/rbedse81@gmail.com", {
-        name: name,
-        message: message,
-        email: email,
+        name: name.trim(),
+        message: message.trim(),
+        email: email.trim(),
       })
       .then((response) => {
-        if (response.status == 200) {
-          toast.success("Message Sent Successfully", {
+        if (response.status === 200) {
+          toast.success("Message Sent Successfully!", {
             style: { backgroundColor: "#303030", color: "#fff" },
           });
+          setName("");
+          setEmail("");
+          setMessage("");
+        } else {
+          throw new Error("Unexpected response");
         }
       })
-      .catch((error) =>
-        toast.error("Unable to send messages", {
+      .catch((error) => {
+        const errorMsg =
+          error.response?.data?.error || "Unable to send the message.";
+        toast.error(errorMsg, {
           style: { backgroundColor: "#303030", color: "#fff" },
-        })
-      );
+        });
+      });
   }
+
   return (
     <>
       <div>
@@ -69,7 +75,6 @@ export default function Contact() {
           <form
             id="form"
             className="xl:px-24 sm:px-0"
-            action=""
             onSubmit={handleForm}
           >
             <div className="grid sm:grid-cols-2 grid-cols-1 gap-x-8 gap-y-4 w-full justify-center">
@@ -77,6 +82,7 @@ export default function Contact() {
                 <label className="text-primary font-semibold">
                   Your Name
                   <input
+                    value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
                     className="w-full text-black rounded-md h-10 px-2"
@@ -88,8 +94,9 @@ export default function Contact() {
               </div>
               <div>
                 <label className="text-primary font-semibold">
-                  Email Adress
+                  Email Address
                   <input
+                    value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
                     className="w-full text-black rounded-md h-10 px-2"
@@ -104,6 +111,7 @@ export default function Contact() {
               <label className="text-primary font-semibold">
                 Message
                 <textarea
+                  value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   className="w-full text-black rounded-md h-28 p-2"
                   name="message"
@@ -113,12 +121,12 @@ export default function Contact() {
               </label>
             </div>
             <div className="text-center">
-              <input
-                onClick={Check}
+              <button
                 type="submit"
-                value="submit :)"
-                className="px-4 py-2 rounded-md bg-white font-bold"
-              />
+                className="px-4 py-2 rounded-md bg-white font-bold hover:bg-gray-200"
+              >
+                Submit :)
+              </button>
             </div>
           </form>
         </div>
