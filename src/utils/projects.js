@@ -21,7 +21,7 @@ const data = [
     {
         name: "E-learnig Platform",
         type: "Website",
-        url: "#projects",
+        url: "https://edu-rohit.vercel.app/",
         github: "https://github.com/rohitbedse/Edu_Rohit.git",
         image: LifeInsureEase,
         slug: "E-Leaning-Platform",
@@ -42,8 +42,8 @@ const data = [
     {
         name: "DocAid",
         type: "Website",
-        url: "https://doc-aid.vercel.app/",
-        github: 'https://github.com/DevRohit06/DocAid',
+        url: "#",
+        github: '#',
         image: docAid,
         slug: "docaid",
         description: "Website template for Health related businesses",
@@ -52,8 +52,8 @@ const data = [
     {
         name: "DevBlogs",
         type: "WebApp",
-        url: "https://www.devblogs.xyz/",
-        github: "https://github.com/DevRohit06/blog",
+        url: "#",
+        github: "#",
         image: blog,
         slug: "devblogs",
         description: "This is a Blogging website made for technology lovers.",
@@ -62,8 +62,8 @@ const data = [
     {
         name: "Ras Production",
         type: "Website",
-        url: "https://rasproduction.vercel.app/",
-        github: "https://github.com/DevRohit06/videography-website",
+        url: "#",
+        github: "#",
         image: ras,
         slug: "ras",
         description: "This is an Portfolio website for videography businesses made using HTML, Javascript, Css and Tailwind css it practices modern ui with dark theme ",
@@ -80,16 +80,6 @@ const data = [
         tech: ['React', 'Javascript', 'Css', 'Tailwind css', 'express', 'nodejs']
     },
 
-    {
-        name: "Lofi Beats",
-        type: "Website",
-        url: "https://lofibeats-3oo4q8gbg-lofi.vercel.app/",
-        github: "https://github.com/Lofi-Beats/lofibeats",
-        image: lofi,
-        slug: "lofibeats",
-        description: "Website that was built for Discord music bot named lofi beats built using plain html javascript and tailwind css",
-        tech: ['HTML', 'Javascript', 'Css', 'Tailwind css']
-    },
 ]
 
 export function getData(){
