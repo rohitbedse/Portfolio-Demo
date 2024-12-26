@@ -2,7 +2,7 @@ import ras from "../assets/images/ras.webp";
 import joke from "../assets/images/joke.webp";
 import lofi from "../assets/images/lofi.webp";
 import blog from "../assets/images/blog.webp";
-import docAid from "../assets/images/docAid.webp";
+import docAid from "../assets/images/stability.png";
 import LifeInsureEase from "../assets/images/Edu_Rohit.png";
 import Portfolio from "../assets/images/portfolio.png"
 import CartManagementSystem from "../assets/images/retrieval-system.png"
@@ -40,14 +40,14 @@ const data = [
         tech: ['HTML', 'Javascript', 'Css', 'Tailwind css', 'Astro', 'Reactjs']
     },
     {
-        name: "DocAid",
+        name: "Ai Image Generator",
         type: "Website",
-        url: "#",
-        github: '#',
+        url: "https://rohitbedse.github.io/Ai_rohit/",
+        github: 'https://github.com/rohitbedse/Ai_rohit.git',
         image: docAid,
-        slug: "docaid",
-        description: "Website template for Health related businesses",
-        tech: ['HTML', 'Javascript', 'CSS', 'Tailwind css', 'ReactJS']
+        slug: "Ai-Image-Generator",
+        description: "Ai base image generator website made using Reactjs and Tailwind css",
+        tech: ['Html', 'Node', 'CSS', 'Tailwind css', 'ReactJS']
     },
     {
         name: "DevBlogs",
