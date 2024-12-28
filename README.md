@@ -13,7 +13,7 @@ This is my personal portfolio website built using Tailwind CSS and Astro. It sho
 
   
 
-![Portfolio Website Preview](href="src/assets/images/portfolio.png")
+![Portfolio Website Preview](src/assets/images/portfolio.png)
 
   
 
