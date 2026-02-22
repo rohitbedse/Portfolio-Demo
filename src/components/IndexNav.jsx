@@ -68,17 +68,38 @@ export default function IndexNav() {
                   </a>
                   <a
                     onClick={() => isShow(false)}
-                    aria-label="projects"
-                    href="/projects"
-                  >
-                    Projects
-                  </a>
-                  <a
-                    onClick={() => isShow(false)}
                     aria-label="about"
                     href="/#about"
                   >
                     About
+                  </a>
+                  <a
+                    onClick={() => isShow(false)}
+                    aria-label="experience"
+                    href="/#experience"
+                  >
+                    Experience
+                  </a>
+                  <a
+                    onClick={() => isShow(false)}
+                    aria-label="certifications"
+                    href="/#certifications"
+                  >
+                    Certifications
+                  </a>
+                  <a
+                    onClick={() => isShow(false)}
+                    aria-label="education"
+                    href="/#education"
+                  >
+                    Education
+                  </a>
+                  <a
+                    onClick={() => isShow(false)}
+                    aria-label="projects"
+                    href="/#project"
+                  >
+                    Projects
                   </a>
                   <a
                     onClick={() => isShow(false)}
