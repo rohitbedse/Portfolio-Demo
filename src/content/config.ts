@@ -1,6 +1,5 @@
 import { z, defineCollection } from 'astro:content';
-import { rssSchema } from '@astrojs/rss';
-// 2. Define your collection(s)
+// Define your collection(s)
 const blogCollection = defineCollection({
   schema: z.object({
     draft: z.boolean(),
@@ -11,7 +10,7 @@ const blogCollection = defineCollection({
       alt: z.string(),
     }),
     publishDate: z.string().transform(str => new Date(str)),
-    author: z.string().default('Astroship'),
+    author: z.string().default('Rohit Bedse'),
     category: z.string(),
     tags: z.array(z.string()),
   }),
