@@ -1,50 +1,72 @@
 "use client";
-import { motion } from "framer-motion";
-import { PROFILE } from "@/lib/data";
+
+import { motion, useReducedMotion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
+import { COMPETENCIES } from "@/lib/data";
 
 export default function Competencies() {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
-    <section id="competencies" className="py-24 px-6 max-w-6xl mx-auto">
-      <div className="text-center mb-16">
-        <h2 className="text-3xl md:text-5xl font-bold tracking-tighter mb-4">Core Competencies</h2>
-        <p className="text-gray-400 max-w-xl mx-auto">
-          Evidence-backed skill sets proven through actual project implementation.
-        </p>
-      </div>
+    <section id="skills" className="py-20 sm:py-24 px-6" aria-label="Skills and competencies">
+      <div className="max-w-6xl mx-auto">
+        <motion.div
+          {...(shouldReduceMotion
+            ? {}
+            : {
+                initial: { opacity: 0, y: 16 },
+                whileInView: { opacity: 1, y: 0 },
+                viewport: { once: true },
+                transition: { duration: 0.4 },
+              })}
+          className="mb-14"
+        >
+          <h2 className="text-display-sm mb-4">Core Competencies</h2>
+          <p className="text-text-secondary text-body-lg max-w-2xl">
+            Evidence-backed skill sets proven through project implementation and
+            production work.
+          </p>
+        </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {PROFILE.competencies.map((comp, index) => (
-          <motion.div
-            key={comp.group}
-            initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="p-8 rounded-3xl glass relative group overflow-hidden"
-          >
-            <div className="absolute top-0 right-0 w-32 h-32 bg-accent/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-accent/10 transition-colors" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {COMPETENCIES.map((comp, index) => (
+            <motion.div
+              key={comp.group}
+              {...(shouldReduceMotion
+                ? {}
+                : {
+                    initial: { opacity: 0, y: 16 },
+                    whileInView: { opacity: 1, y: 0 },
+                    viewport: { once: true },
+                    transition: { duration: 0.4, delay: index * 0.05 },
+                  })}
+              className="rounded-xl border border-border bg-surface-raised p-6 hover:border-accent/20 transition-colors"
+            >
+              <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
+                <span className="w-1 h-5 bg-accent rounded-full" />
+                {comp.group}
+              </h3>
 
-            <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
-              <span className="w-2 h-6 bg-accent rounded-full" />
-              {comp.group}
-            </h3>
+              <div className="flex flex-wrap gap-1.5 mb-5">
+                {comp.skills.map((skill) => (
+                  <span
+                    key={skill}
+                    className="text-xs font-medium px-2.5 py-1 rounded-md bg-surface border border-border text-text-secondary"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
 
-            <div className="flex flex-wrap gap-2 mb-6">
-              {comp.skills.map(skill => (
-                <span key={skill} className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-sm text-gray-300">
-                  {skill}
-                </span>
-              ))}
-            </div>
-
-            <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/5 flex gap-3 items-start">
-              <CheckCircle2 className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-              <p className="text-sm text-gray-400 italic leading-relaxed">
-                {comp.evidence}
-              </p>
-            </div>
-          </motion.div>
-        ))}
+              <div className="flex gap-2.5 items-start p-3 rounded-lg bg-surface/50 border border-border-subtle">
+                <CheckCircle2 className="w-4 h-4 text-accent shrink-0 mt-0.5" />
+                <p className="text-sm text-text-muted leading-relaxed">
+                  {comp.evidence}
+                </p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );

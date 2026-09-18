@@ -1,21 +1,25 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import About from "@/components/About";
-import Journey from "@/components/Journey";
+import Experience from "@/components/Experience";
 import Projects from "@/components/Projects";
 import Competencies from "@/components/Competencies";
+import Journey from "@/components/Journey";
+import Certifications from "@/components/Certifications";
 import Footer from "@/components/Footer";
 
 export default function Page() {
   return (
-    <main className="relative">
+    <>
       <Navbar />
-      <Hero />
-      <About />
-      <Journey />
-      <Projects />
-      <Competencies />
+      <main>
+        <Hero />
+        <Experience />
+        <Projects />
+        <Competencies />
+        <Journey />
+        <Certifications />
+      </main>
       <Footer />
-    </main>
+    </>
   );
 }

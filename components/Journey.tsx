@@ -1,51 +1,98 @@
 "use client";
-import { motion } from "framer-motion";
-import { PROFILE } from "@/lib/data";
-import { cn } from "@/lib/utils";
+
+import { motion, useReducedMotion } from "framer-motion";
+import { JOURNEY } from "@/lib/data";
+
+const STAGE_ICONS: Record<string, string> = {
+  Foundation: "🎓",
+  "ML Deep Dive": "📊",
+  "Model Mastery": "🚀",
+  "GenAI Era": "🤖",
+};
 
 export default function Journey() {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
-    <section id="journey" className="py-24 px-6 max-w-6xl mx-auto">
-      <div className="text-center mb-16">
-        <h2 className="text-3xl md:text-5xl font-bold tracking-tighter mb-4">The Path to Mastery</h2>
-        <p className="text-gray-400 max-w-xl mx-auto">
-          My evolution from computer science fundamentals to the bleeding edge of Generative AI.
-        </p>
-      </div>
+    <section id="journey" className="py-20 sm:py-24 px-6" aria-label="Career journey">
+      <div className="max-w-6xl mx-auto">
+        <motion.div
+          {...(shouldReduceMotion
+            ? {}
+            : {
+                initial: { opacity: 0, y: 16 },
+                whileInView: { opacity: 1, y: 0 },
+                viewport: { once: true },
+                transition: { duration: 0.4 },
+              })}
+          className="mb-14"
+        >
+          <h2 className="text-display-sm mb-4">The Path to Mastery</h2>
+          <p className="text-text-secondary text-body-lg max-w-2xl">
+            From computer science fundamentals to the cutting edge of Generative
+            AI.
+          </p>
+        </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {PROFILE.journey.map((step, index) => (
-          <motion.div
-            key={step.stage}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: index * 0.1 }}
-            className="relative group"
-          >
-            <div className="h-full p-8 rounded-3xl glass group-hover:bg-white/[0.08] transition-colors relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-4 text-6xl font-black text-white/[0.03] select-none">
-                0{index + 1}
-              </div>
+        {/* Timeline */}
+        <div className="relative">
+          {/* Vertical connector line — visible on all screens */}
+          <div className="absolute left-5 sm:left-1/2 top-0 bottom-0 w-px bg-border sm:-translate-x-px" />
 
-              <div className="mb-6">
-                <span className="text-xs font-bold uppercase tracking-widest text-accent px-2 py-1 rounded-md bg-accent/10 border border-accent/20">
-                  {step.stage}
-                </span>
-              </div>
+          <div className="space-y-12 sm:space-y-16">
+            {JOURNEY.map((step, index) => {
+              const isLeft = index % 2 === 0;
+              return (
+                <motion.div
+                  key={step.stage}
+                  {...(shouldReduceMotion
+                    ? {}
+                    : {
+                        initial: { opacity: 0, y: 16 },
+                        whileInView: { opacity: 1, y: 0 },
+                        viewport: { once: true },
+                        transition: { duration: 0.4, delay: index * 0.1 },
+                      })}
+                  className="relative"
+                >
+                  {/* Dot on timeline */}
+                  <div className="absolute left-5 sm:left-1/2 top-8 w-3 h-3 -translate-x-1/2 rounded-full bg-accent border-2 border-surface z-10" />
 
-              <h3 className="text-xl font-bold mb-2">{step.title}</h3>
-              <p className="text-sm text-gray-500 mb-4">{step.institution}</p>
-              <p className="text-gray-400 text-sm leading-relaxed">
-                {step.description}
-              </p>
+                  {/* Card — stacks vertically on mobile, alternates on desktop */}
+                  <div
+                    className={`pl-14 sm:pl-0 sm:w-[calc(50%-2rem)] ${
+                      isLeft
+                        ? "sm:mr-auto sm:pr-0"
+                        : "sm:ml-auto sm:pl-0"
+                    }`}
+                  >
+                    <article className="rounded-xl border border-border bg-surface-raised p-6 hover:border-accent/20 transition-colors">
+                      <div className="flex items-center gap-3 mb-4">
+                        <span className="text-2xl" role="img" aria-label={step.stage}>
+                          {STAGE_ICONS[step.stage] || "📌"}
+                        </span>
+                        <div>
+                          <span className="text-[10px] font-bold uppercase tracking-widest text-accent">
+                            {step.stage}
+                          </span>
+                          <p className="text-xs text-text-muted">{step.period}</p>
+                        </div>
+                      </div>
 
-              <div className="mt-6 pt-6 border-t border-white/10 text-xs text-gray-500 flex justify-between items-center">
-                <span>Status: {step.period}</span>
-              </div>
-            </div>
-          </motion.div>
-        ))}
+                      <h3 className="text-lg font-bold mb-1">{step.title}</h3>
+                      <p className="text-sm font-medium text-accent/80 mb-3">
+                        {step.milestone}
+                      </p>
+                      <p className="text-sm text-text-secondary leading-relaxed">
+                        {step.description}
+                      </p>
+                    </article>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
       </div>
     </section>
   );

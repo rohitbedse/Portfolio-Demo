@@ -1,107 +1,160 @@
 "use client";
-import { motion } from "framer-motion";
-import { ExternalLink, Github, TrendingUp } from "lucide-react";
-import { PROFILE } from "@/lib/data";
-import { cn } from "@/lib/utils";
+
+import { motion, useReducedMotion } from "framer-motion";
+import { Github, ArrowUpRight } from "lucide-react";
+import { PROJECTS } from "@/lib/data";
 
 export default function Projects() {
-  const flagship = PROFILE.projects.filter(p => p.flagship);
-  const other = PROFILE.projects.filter(p => !p.flagship);
+  const shouldReduceMotion = useReducedMotion();
+  const featured = PROJECTS.find((p) => p.featured);
+  const others = PROJECTS.filter((p) => !p.featured);
+
+  const animProps = shouldReduceMotion
+    ? {}
+    : {
+        initial: { opacity: 0, y: 16 } as const,
+        whileInView: { opacity: 1, y: 0 } as const,
+        viewport: { once: true } as const,
+        transition: { duration: 0.4 } as const,
+      };
 
   return (
-    <section id="projects" className="py-24 px-6 max-w-6xl mx-auto">
-      <div className="text-center mb-16">
-        <h2 className="text-3xl md:text-5xl font-bold tracking-tighter mb-4">Proof of Work</h2>
-        <p className="text-gray-400 max-w-xl mx-auto">
-          Production-ready ML systems with measurable impact and documented experiments.
-        </p>
-      </div>
+    <section id="projects" className="py-20 sm:py-24 px-6" aria-label="Projects">
+      <div className="max-w-6xl mx-auto">
+        <motion.div {...animProps} className="mb-14">
+          <h2 className="text-display-sm mb-4">Proof of Work</h2>
+          <p className="text-text-secondary text-body-lg max-w-2xl">
+            Production-ready ML systems with measurable impact and documented
+            experiments.
+          </p>
+        </motion.div>
 
-      <div className="grid grid-cols-1 gap-12">
-        {/* Flagship Projects */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {flagship.map((project, index) => (
-            <motion.div
-              key={project.title}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="relative group rounded-3xl overflow-hidden glass border-white/20"
-            >
-              <div className="aspect-video relative overflow-hidden">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-dark-bg via-transparent to-transparent" />
+        {/* Featured project — hero treatment */}
+        {featured && (
+          <motion.article
+            {...animProps}
+            className="rounded-xl border border-accent/30 bg-surface-raised p-6 sm:p-8 mb-8 relative overflow-hidden"
+          >
+            {/* Subtle accent indicator */}
+            <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-accent via-accent/60 to-transparent" />
+
+            <div className="flex flex-col gap-6">
+              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+                <div>
+                  <span className="inline-block text-[10px] font-bold uppercase tracking-widest text-accent mb-2">
+                    Featured Project
+                  </span>
+                  <h3 className="text-2xl sm:text-3xl font-bold tracking-tight">
+                    {featured.title}
+                  </h3>
+                  <p className="text-sm text-text-muted mt-1">{featured.period}</p>
+                </div>
+                {featured.links.github && (
+                  <a
+                    href={featured.links.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-sm font-medium text-accent hover:text-accent-light transition-colors min-h-[44px] shrink-0"
+                    aria-label={`View ${featured.title} source code on GitHub`}
+                  >
+                    <Github className="w-4 h-4" />
+                    Source Code
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </a>
+                )}
               </div>
 
-              <div className="p-8">
-                <div className="flex justify-between items-start mb-4">
-                  <h3 className="text-2xl font-bold tracking-tight">{project.title}</h3>
-                  <div className="flex gap-2">
-                    <a href={project.links.github} className="p-2 rounded-full bg-white/5 hover:bg-white/10 transition-colors">
+              {/* Metrics grid */}
+              {featured.metrics && (
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  {Object.entries(featured.metrics).map(([key, value]) => (
+                    <div
+                      key={key}
+                      className="rounded-lg border border-border bg-surface p-4 text-center"
+                    >
+                      <p className="text-2xl sm:text-3xl font-extrabold text-text-primary tracking-tight">
+                        {value}
+                      </p>
+                      <p className="text-[11px] uppercase tracking-wider text-text-muted mt-1 font-medium">
+                        {key}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              <p className="text-text-secondary leading-relaxed max-w-3xl">
+                {featured.description}
+              </p>
+
+              <div className="flex flex-wrap gap-2">
+                {featured.tech.map((t) => (
+                  <span
+                    key={t}
+                    className="text-xs font-medium px-2.5 py-1 rounded-md bg-accent/10 text-accent border border-accent/20"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </motion.article>
+        )}
+
+        {/* Other projects */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {others.map((project, index) => (
+            <motion.article
+              key={project.title}
+              {...(shouldReduceMotion
+                ? {}
+                : {
+                    initial: { opacity: 0, y: 16 },
+                    whileInView: { opacity: 1, y: 0 },
+                    viewport: { once: true },
+                    transition: { duration: 0.4, delay: index * 0.1 },
+                  })}
+              className="group rounded-xl border border-border bg-surface-raised p-6 hover:border-border/80 transition-colors"
+            >
+              <div className="flex flex-col h-full">
+                <div className="flex items-start justify-between gap-3 mb-4">
+                  <div>
+                    <h3 className="text-lg font-bold tracking-tight group-hover:text-accent transition-colors">
+                      {project.title}
+                    </h3>
+                    <p className="text-xs text-text-muted mt-1">{project.period}</p>
+                  </div>
+                  {project.links.github && (
+                    <a
+                      href={project.links.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-md border border-border hover:border-accent/50 hover:text-accent transition-colors shrink-0"
+                      aria-label={`View ${project.title} source code on GitHub`}
+                    >
                       <Github className="w-4 h-4" />
                     </a>
-                    <a href={project.links.live} className="p-2 rounded-full bg-white/5 hover:bg-white/10 transition-colors">
-                      <ExternalLink className="w-4 h-4" />
-                    </a>
-                  </div>
+                  )}
                 </div>
 
-                <p className="text-gray-400 text-sm leading-relaxed mb-6">
+                <p className="text-sm text-text-secondary leading-relaxed mb-5 flex-1">
                   {project.description}
                 </p>
 
-                {project.metrics && (
-                  <div className="grid grid-cols-3 gap-4 mb-6">
-                    {Object.entries(project.metrics).map(([key, value]) => (
-                      <div key={key} className="p-3 rounded-2xl bg-white/5 border border-white/10 text-center">
-                        <p className="text-[10px] uppercase text-gray-500 mb-1">{key}</p>
-                        <p className="text-sm font-bold text-white">{value}</p>
-                      </div>
-                    ))}
-                  </div>
-                )}
-
-                <div className="flex flex-wrap gap-2">
-                  {project.tech.map(t => (
-                    <span key={t} className="text-[10px] font-medium px-2 py-1 rounded-md bg-white/5 border border-white/10 text-gray-400">
+                <div className="flex flex-wrap gap-1.5">
+                  {project.tech.map((t) => (
+                    <span
+                      key={t}
+                      className="text-[11px] font-medium px-2 py-0.5 rounded bg-surface border border-border text-text-muted"
+                    >
                       {t}
                     </span>
                   ))}
                 </div>
               </div>
-            </motion.div>
+            </motion.article>
           ))}
         </div>
-
-        {/* Other Projects */}
-        {other.length > 0 && (
-          <div className="mt-12">
-            <h3 className="text-xl font-bold mb-8 text-center text-gray-500">Other Explorations</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {other.map((project) => (
-                <motion.div
-                  key={project.title}
-                  whileHover={{ y: -5 }}
-                  className="p-6 rounded-3xl glass hover:bg-white/[0.08] transition-all"
-                >
-                  <div className="aspect-square rounded-2xl overflow-hidden mb-4">
-                    <img src={project.image} alt={project.title} className="object-cover w-full h-full" />
-                  </div>
-                  <h4 className="font-bold mb-2">{project.title}</h4>
-                  <p className="text-xs text-gray-400 line-clamp-2 mb-4">{project.description}</p>
-                  <a href={project.links.github} className="text-xs font-bold text-accent flex items-center gap-1 hover:underline">
-                    View Source <ExternalLink className="w-3 h-3" />
-                  </a>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        )}
       </div>
     </section>
   );
