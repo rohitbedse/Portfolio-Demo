@@ -7,6 +7,16 @@ import { CERTIFICATIONS } from "@/lib/data";
 export default function Certifications() {
   const shouldReduceMotion = useReducedMotion();
 
+  const animProps = (delay: number = 0) =>
+    shouldReduceMotion
+      ? {}
+      : {
+          initial: { opacity: 0, y: 24 } as const,
+          whileInView: { opacity: 1, y: 0 } as const,
+          viewport: { once: true, margin: "-50px" } as const,
+          transition: { duration: 0.5, delay, ease: [0.25, 0.46, 0.45, 0.94] } as const,
+        };
+
   return (
     <section
       id="certifications"
@@ -14,18 +24,12 @@ export default function Certifications() {
       aria-label="Certifications"
     >
       <div className="max-w-6xl mx-auto">
-        <motion.div
-          {...(shouldReduceMotion
-            ? {}
-            : {
-                initial: { opacity: 0, y: 16 },
-                whileInView: { opacity: 1, y: 0 },
-                viewport: { once: true },
-                transition: { duration: 0.4 },
-              })}
-          className="mb-14"
-        >
-          <h2 className="text-display-sm mb-4">Certifications</h2>
+        <div className="section-divider mb-20" />
+
+        <motion.div {...animProps()} className="mb-14">
+          <h2 className="text-display-sm mb-4">
+            <span className="gradient-text-subtle">Certifications</span>
+          </h2>
           <p className="text-text-secondary text-body-lg max-w-2xl">
             Industry-recognized credentials in AI, ML, and cloud.
           </p>
@@ -35,18 +39,13 @@ export default function Certifications() {
           {CERTIFICATIONS.map((cert, index) => (
             <motion.div
               key={cert.title}
-              {...(shouldReduceMotion
-                ? {}
-                : {
-                    initial: { opacity: 0, y: 16 },
-                    whileInView: { opacity: 1, y: 0 },
-                    viewport: { once: true },
-                    transition: { duration: 0.4, delay: index * 0.05 },
-                  })}
-              className="rounded-xl border border-border bg-surface-raised p-5 hover:border-accent/20 transition-colors"
+              {...animProps(index * 0.08)}
+              className="card-hover rounded-xl border border-border bg-surface-raised p-5"
             >
-              <Award className="w-5 h-5 text-accent mb-3" />
-              <h3 className="text-sm font-bold mb-1 leading-snug">
+              <div className="w-9 h-9 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center mb-4">
+                <Award className="w-4 h-4 text-accent" />
+              </div>
+              <h3 className="text-sm font-bold mb-1.5 leading-snug">
                 {cert.title}
               </h3>
               <p className="text-xs text-text-muted">

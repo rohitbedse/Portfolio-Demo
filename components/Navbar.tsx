@@ -22,7 +22,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Lock body scroll when mobile menu is open
   useEffect(() => {
     if (isMobileOpen) {
       document.body.style.overflow = "hidden";
@@ -36,9 +35,9 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
-          ? "bg-surface/95 backdrop-blur-sm border-b border-border-subtle"
+          ? "bg-surface/90 backdrop-blur-md border-b border-border-subtle shadow-lg shadow-black/20"
           : "bg-transparent"
       }`}
     >
@@ -48,10 +47,11 @@ export default function Navbar() {
       >
         <Link
           href="/"
-          className="text-lg font-bold tracking-tight hover:text-accent transition-colors"
+          className="text-lg font-bold tracking-tight group"
           aria-label="Rohit Bedse — Home"
         >
-          RB<span className="text-accent">.</span>
+          <span className="group-hover:text-accent transition-colors duration-300">RB</span>
+          <span className="text-accent group-hover:text-accent-light transition-colors duration-300">.</span>
         </Link>
 
         {/* Desktop nav */}
@@ -60,7 +60,7 @@ export default function Navbar() {
             <a
               key={link.href}
               href={link.href}
-              className="text-sm font-medium text-text-secondary hover:text-text-primary transition-colors"
+              className="nav-link text-sm font-medium text-text-secondary hover:text-text-primary transition-colors duration-200 py-1"
             >
               {link.label}
             </a>
@@ -79,22 +79,29 @@ export default function Navbar() {
       </nav>
 
       {/* Mobile menu */}
-      {isMobileOpen && (
-        <div className="md:hidden fixed inset-0 top-16 bg-surface/98 backdrop-blur-sm z-40">
-          <nav className="flex flex-col items-center justify-center h-full gap-8" aria-label="Mobile navigation">
-            {NAV_LINKS.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={() => setIsMobileOpen(false)}
-                className="text-xl font-medium text-text-secondary hover:text-text-primary transition-colors min-h-[44px] flex items-center"
-              >
-                {link.label}
-              </a>
-            ))}
-          </nav>
-        </div>
-      )}
+      <div
+        className={`md:hidden fixed inset-0 top-16 bg-surface/98 backdrop-blur-md z-40 transition-all duration-300 ${
+          isMobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+      >
+        <nav className="flex flex-col items-center justify-center h-full gap-8" aria-label="Mobile navigation">
+          {NAV_LINKS.map((link, i) => (
+            <a
+              key={link.href}
+              href={link.href}
+              onClick={() => setIsMobileOpen(false)}
+              className="text-2xl font-medium text-text-secondary hover:text-accent transition-all duration-300 min-h-[44px] flex items-center"
+              style={{
+                transitionDelay: isMobileOpen ? `${i * 50}ms` : "0ms",
+                transform: isMobileOpen ? "translateY(0)" : "translateY(20px)",
+                opacity: isMobileOpen ? 1 : 0,
+              }}
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
+      </div>
     </header>
   );
 }
